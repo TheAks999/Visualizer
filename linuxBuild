@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Run the codegen and get the files
+
+# Get to the codegen
+cd ../codegen/
+
+# Run it
+python main.py templates
+
+# Copy the appropriate files over
+cp -f -r ./output/visualizer/* ../visualizer/lib/parser/
+
+# First compile parser for linux
+# Get to Parser directory:
+cd ../visualizer/lib/parser
+
+# We want to remove all linux binaries and helper files
+make clean
+
+#Update timestamps for flex because flex cares for some reason.
+touch sexp/lex.yy.*
+
+# Build Parser for linux:
+make
+
+# Congrats, a linux parser has now been built for you.
+
+# Back to the root directory:
+cd ../../
+
+# Build Makefiles for linux:
+qmake
+
+# clean up for a full build
+make clean
+
+# Leave off release if you want a debug build
+make 
+
+# Congrats, you're done

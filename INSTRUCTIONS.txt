@@ -1,0 +1,22 @@
+Visualizer Operation
+1) Run visualizer
+2) Open gamelog (Ctrl + O)
+3) Watch gamelog
+
+Visualizer keyboard shortcuts:
+File options
+* Ctrl + O to Open
+* Ctrl + Q to Quit
+
+View options
+* F11 to toggle fullscreen
+
+Playback options
+* Space to pause playback
+* Ctrl + R to start / increase rewind speed
+* Ctrl + F to start / increase fast forward speed
+* Left / Right arrow keys to step ONE TURN backwards or forwards in the game log.
+* Number row keys hop to a percentage of completion of the game. (try it!)
+
+Help options
+* F1 opens documentation in a browser window

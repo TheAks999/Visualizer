@@ -1,0 +1,4 @@
+*.o
+Makefile
+visualizer
+moc_*.cpp

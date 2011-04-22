@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Run the codegen and get the files
+
+# Get to the codegen
+cd ../codegen/
+
+# Run it
+python main.py templates
+
+# Copy the appropriate files over
+cp -f -r ./output/visualizer/* ../visualizer/lib/parser/
+
+# First compile parser for linux
+# Get to Parser directory:
+cd ../visualizer/lib/parser
+
+# We want to remove all linux binaries and helper files
+make clean
+
+# Build Parser for Windows:
+make TARGET=mingw
+
+# Congrats, a windows parser has now been built for you.
+
+# Back to the root directory:
+cd ../../
+
+# Build Makefiles for windows:
+qmake -spec win32-x-g++
+
+# Leave off release if you want a debug build
+make release
+
+# Clean up windows mess
+make clean
+
+# Your visualizer.exe executable will now be in ./release or ./debug
+ 
+# Now reset everything so that it compiles appropriately in linux
+
+# Build linux make files
+qmake
+
+# Get to parser directory:
+cd ./lib/parser
+
+# Remove windows specific stuff
+make clean
+
+# Congrats, you're done
+cd ../..
+
+mkdir release/piracy
+cp -r ./piracy/textures ./release/piracy
+cp ./options.cfg ./release/
+cp ./textures.r ./release/

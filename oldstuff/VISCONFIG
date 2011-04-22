@@ -1,0 +1,77 @@
+# Next frame every X ms
+DefaultSpeed = 1000 
+# Default Unit Size On Load: X pixels
+UnitSize = 64 
+
+# Default Board Height
+BoardHeightPx = 512
+# Default Board Height
+BoardWidthPx = 512
+# Do you wish to pause the game when loading
+PauseOnLoad = 0
+
+#Shows the map grid on startup
+ MapGrid = Yes
+
+# TEXTURES
+
+## Pieces 
+
+### White Pieces
+
+whitePawnFile = "textures/whitePawn.png"
+whiteRookFile = "textures/whiteRook.png"
+whiteKnightFile = "textures/whiteKnight.png"
+whiteBishopFile = "textures/whiteBishop.png"
+whiteQueenFile = "textures/whiteQueen.png"
+whiteKingFile = "textures/whiteKing.png"
+
+### Black Pieces 
+
+blackPawnFile = "textures/blackPawn.png"
+blackRookFile = "textures/blackRook.png"
+blackKnightFile = "textures/blackKnight.png"
+blackBishopFile = "textures/blackBishop.png"
+blackQueenFile = "textures/blackQueen.png"
+blackKingFile = "textures/blackKing.png"
+
+## Other
+
+# Default Background Image
+defBGFileName = "textures/Ground Asphault 64.png"
+# Default Grid Image
+gridFileName = "textures/grid.png"
+
+# Default Wall Image Full Health
+wall100FileName = "textures/Walls Life 100.png"
+# Default Wall Image 75% Health
+wall75FileName = "textures/Walls Life 75.png"
+# Default Wall Image 50% Health
+wall50FileName = "textures/Walls Life 50.png"
+# Default Wall Image 25% Health
+wall25FileName = "textures/Walls Life 25.png"
+
+# Explode File 
+ExplodeFile = "textures/Fiery Doom.png"
+
+# Time to click the mouse to register it as a double click
+doubleClickTime = 275
+
+
+# FONT STUFF
+
+# Default Font Texture
+defaultFont = "textures/font1.png"
+# File containing list of widths for each font character
+defaultFontWidths = "textures/font1.dat"
+
+# ARENA STUFF
+
+# Is This the Arena?
+ArenaMode = 0
+# Time(in ms) we wish to display who the winner is
+WinnerScreenTime = 5000
+# Initial Screen Time
+InitializationTime = 3000
+# Show the Init Screen?
+ShowInitScreen = Yes 
