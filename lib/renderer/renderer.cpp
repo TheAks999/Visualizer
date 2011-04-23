@@ -217,6 +217,8 @@ bool Renderer::setupOGL()
     if (isSetup())
 	return false;
 
+    bool flag = true;
+
     get()->initializeGL();
 
     std::cout << "test1\n";
