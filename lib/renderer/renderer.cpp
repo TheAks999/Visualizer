@@ -219,19 +219,34 @@ bool Renderer::setupOGL()
 
     get()->initializeGL();
 
+    std::cout << "test1\n";
     glShadeModel( GL_SMOOTH );
+    flag &= flushGlErrors();
+    std::cout << "test2\n";
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+    flag &= flushGlErrors();
+    std::cout << "test3\n";
     glClearDepth( 1.0f );
+    flag &= flushGlErrors();
 
+    std::cout << "test4\n";
     glEnable( GL_DEPTH_TEST );
+    flag &= flushGlErrors();
+    std::cout << "test5\n";
     glDepthFunc( GL_LEQUAL );
+    flag &= flushGlErrors();
 
 
+    std::cout << "test6\n";
     glDisable( GL_TEXTURE_2D );
+    flag &=flushGlErrors();
+    std::cout << "test7\n";
     glEnable( GL_BLEND );
+    std::cout << "test8\n";
+    flag &= flushGlErrors();
+    std::cout << "test9\n";
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-    if (!flushGlErrors())
+    if (!flushGlErrors() || !flag)
         return false;
 
 
