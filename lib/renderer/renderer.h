@@ -135,8 +135,6 @@ class Renderer : public Singleton <Renderer>, QGLWidget
 
   protected:
   private:
-    //std::map<unsigned int,renderObj*> m_objects; //!< Member variable "m_objects"
-    //LookupTable<renderObj> m_lookupTable;
     unsigned int m_height;
     unsigned int m_width;
     unsigned int m_depth;
@@ -157,9 +155,6 @@ class Renderer : public Singleton <Renderer>, QGLWidget
     void printGlobalSelected( int c, int r, QString str );
     void printIndividuals( int c, int r, QString str );
     void printToTable( QTableWidget *w, int c, int r, QString str );
-
-    //static void updateLocation(const unsigned int & x, const unsigned int & y, const unsigned int & z, const unsigned int & dir,
-    //  const unsigned int & time, GOCFamily_Render * obj);
 
     typedef Singleton< Renderer > Single;
 

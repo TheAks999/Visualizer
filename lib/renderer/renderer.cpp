@@ -50,6 +50,8 @@ Renderer::Renderer():QGLWidget( QGLFormat( QGL::SampleBuffers ), NULL )
 bool Renderer::refresh()
 {
 
+  if (!Single::isInit())
+    return false;
 
   if (!isSetup())
     return false;
@@ -67,7 +69,7 @@ bool Renderer::refresh()
 
   for( ; it != Single::get()->m_renderConstant.end(); it++ )
   {
-    GOCFamily_Render *r = it->second;
+    GOCFamily_Render *r = (GOCFamily_Render*)it->second;
     if( r )
     {
       r->renderAt( TimeManager::getTurn(), 0 );
@@ -87,7 +89,6 @@ bool Renderer::refresh()
     glPopMatrix();
   }
 #endif
-  std::cout << "rendering\n";
 
   glPopMatrix();
 
@@ -102,7 +103,7 @@ bool Renderer::refresh()
    {
        char ini;
        std::cout << "Render isValid() " << get()->isValid() << '\n';
-       //std::cin >> ini;
+       std::cin >> ini;
    }
 
   Single::get()->swapBuffers();
@@ -117,14 +118,16 @@ bool Renderer::flushGlErrors()
 {
     GLenum errCode;
     const GLubyte *errString;
+    bool flag = true;
 
-    if ((errCode = glGetError()) != GL_NO_ERROR)
+    while ((errCode = glGetError()) != GL_NO_ERROR)
     {
             errString = gluErrorString(errCode);
-            fprintf (stderr, "OpenGL Error: %s\n", errString);
-            return false;
+            std::cout << "OpenGL Error: " << errString << '\n';
+            flag = false;
     }
-    return true;
+
+    return flag;
 }
 
 void Renderer::setParent( QWidget *parent )
@@ -216,43 +219,9 @@ bool Renderer::setupOGL()
     if (isSetup())
 	return false;
 
-    bool flag = true;
-
+    get()->glInit();
     get()->initializeGL();
 
-    std::cout << "test1\n";
-    glShadeModel( GL_SMOOTH );
-    flag &= flushGlErrors();
-    std::cout << "test2\n";
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    flag &= flushGlErrors();
-    std::cout << "test3\n";
-    glClearDepth( 1.0f );
-    flag &= flushGlErrors();
-
-    std::cout << "test4\n";
-    glEnable( GL_DEPTH_TEST );
-    flag &= flushGlErrors();
-    std::cout << "test5\n";
-    glDepthFunc( GL_LEQUAL );
-    flag &= flushGlErrors();
-
-
-    std::cout << "test6\n";
-    glDisable( GL_TEXTURE_2D );
-    flag &=flushGlErrors();
-    std::cout << "test7\n";
-    glEnable( GL_BLEND );
-    std::cout << "test8\n";
-    flag &= flushGlErrors();
-    std::cout << "test9\n";
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    if (!flushGlErrors() || !flag)
-        return false;
-
-
-    flushGlErrors();
-    get()->m_glInit = true;
     return true;
 }
 
@@ -314,26 +283,6 @@ bool Renderer::clear()
   if (!Single::isInit())
     return false;
 
-  #if 0
-  if (Single::get()->m_duplicateList)
-  {
-    for (unsigned int x = 0; x < width(); x++)
-    {
-      for (unsigned int y = 0; y < height(); y++)
-      {
-        for (unsigned int z = 0; z < depth(); z++)
-        {
-          delete Single::get()->m_duplicateList[x][y][z];
-        }
-        delete [] Single::get()->m_duplicateList[x][y];
-      }
-      delete [] Single::get()->m_duplicateList[x];
-    }
-    delete [] Single::get()->m_duplicateList;
-  }
-  #endif
-
-  //Single::get()->m_duplicateList = NULL;
 
   std::map<int, renderObj*>::iterator it = Single::get()->m_renderConstant.begin();
   for(; it!=Single::get()->m_renderConstant.end(); it++ )
@@ -695,8 +644,27 @@ void Renderer::initializeGL()
 
     if (!get()->m_glInit )
     {
-	QGLWidget::initializeGL();
+
+
+         glShadeModel( GL_SMOOTH );
+         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+         glClearDepth( 1.0f );
+
+         glEnable( GL_DEPTH_TEST );
+         glDepthFunc( GL_LEQUAL );
+
+
+         glDisable( GL_TEXTURE_2D );
+         glEnable( GL_BLEND );
+         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+         if (!flushGlErrors() )
+         {
+             return;
+         }
+
          cout << "VALID: " << isValid() << endl;
+         get()->m_glInit = true;
      }
 }
 
