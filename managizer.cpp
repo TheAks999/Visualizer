@@ -135,7 +135,7 @@ RETURN Managizer::loadData(std::string & error)
 
     if ( !Renderer::setupOGL() )
     {
-	error += "Critical Error: Renderer could not set up Opengl\n";
+        error += "Critical Error: Renderer could not set up Opengl\n";
 	return M_CRITICAL;
     }
 
