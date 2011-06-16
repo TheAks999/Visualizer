@@ -50,8 +50,6 @@ Renderer::Renderer():QGLWidget( QGLFormat( QGL::SampleBuffers ), NULL )
 bool Renderer::refresh()
 {
 
-  if (!Single::isInit())
-    return false;
 
   if (!isSetup())
     return false;
@@ -69,7 +67,7 @@ bool Renderer::refresh()
 
   for( ; it != Single::get()->m_renderConstant.end(); it++ )
   {
-    GOCFamily_Render *r = (GOCFamily_Render*)it->second;
+    GOCFamily_Render *r = it->second;
     if( r )
     {
       r->renderAt( TimeManager::getTurn(), 0 );
@@ -89,6 +87,7 @@ bool Renderer::refresh()
     glPopMatrix();
   }
 #endif
+  std::cout << "rendering\n";
 
   glPopMatrix();
 
@@ -103,7 +102,7 @@ bool Renderer::refresh()
    {
        char ini;
        std::cout << "Render isValid() " << get()->isValid() << '\n';
-       std::cin >> ini;
+       //std::cin >> ini;
    }
 
   Single::get()->swapBuffers();
@@ -253,6 +252,7 @@ bool Renderer::setupOGL()
 
 
     flushGlErrors();
+    get()->m_glInit = true;
     return true;
 }
 
